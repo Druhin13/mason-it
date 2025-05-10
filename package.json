@@ -32,7 +32,7 @@
   "bugs": {
     "url": "https://github.com/Druhin13/mason-it/issues"
   },
-  "homepage": "https://github.com/Druhin13/mason-it#readme",
+  "homepage": "https://druh.in/mason-it",
   "devDependencies": {
     "terser": "^5.26.0"
   }
