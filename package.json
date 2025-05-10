@@ -1,0 +1,16 @@
+{
+  "name": "mason-it",
+  "version": "1.0.0",
+  "description": "A lightweight, zero-dependency JavaScript library for instantly transforming a CSS grid into a responsive masonry layout. Just Mason it.",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "mason-it.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.4",
+    "rollup": "^4.40.2"
+  }
+}

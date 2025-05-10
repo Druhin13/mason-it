@@ -1,0 +1,63 @@
+# Source files (only dist/ should be published)
+src/
+examples/
+test/
+docs/
+
+# Config files
+.eslintrc*
+.prettierrc*
+.babelrc*
+babel.config.js
+rollup.config.js
+webpack.config.js
+jest.config.js
+.travis.yml
+.github/
+
+# Editor configs
+.editorconfig
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Test and coverage
+coverage/
+.nyc_output/
+*.spec.js
+*.test.js
+
+# Build process
+scripts/
+.husky/
+
+# Docs sources (but keep generated docs)
+docs/assets/source/
+
+# Misc
+.DS_Store
+*.log
+.gitattributes
+CONTRIBUTING.md
+CHANGELOG.md
+.travis.yml
+tsconfig.json
+tslint.json
+.eslintignore
+
+# Don't ignore these files (npm will include them despite .npmignore)
+!dist/
+!LICENSE
+!README.md
+!CHANGELOG.md
+!types/
+!package.json
+
+# Miscellaneous
+.gitignore
+.npmignore
+rollup.config.js
+misc/
+docs/
+node_modules/
