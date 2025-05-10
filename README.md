@@ -2,12 +2,11 @@
 
 <br>
 
-# <img src="docs/assets/mason-it-icon.png" alt="mason-it logo" width="48" style="vertical-align: middle; margin-right:6px; border-radius:6px" /> mason-it
+# <img src="docs/assets/mason-it-github-logo.png" alt="mason-it logo" width="48" /> mason-it
 
 
 [![npm version](https://img.shields.io/npm/v/mason-it.svg)](https://www.npmjs.com/package/mason-it)
-[![license](https://img.shields.io/npm/l/mason-it.svg)](https://github.com/Druhin13/mason-it/blob/main/LICENSE)
-![npm](https://img.shields.io/npm/dt/mason-it)
+[![license](https://img.shields.io/npm/l/mason-it.svg?cache=false)](https://github.com/Druhin13/mason-it/blob/main/LICENSE)
 [![](https://data.jsdelivr.com/v1/package/gh/Druhin13/mason-it/badge?style=rounded)](https://www.jsdelivr.com/package/gh/Druhin13/mason-it)
 
 
