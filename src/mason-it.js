@@ -346,10 +346,10 @@
      * @param {MasonItOptions} [options={}] - Configuration options
      * @returns {MasonIt} - Returns the MasonIt object for chaining
      * @example
-     * // Initialize with default options
+     * / Initialize with default options
      * MasonIt.init('.grid');
      *
-     * // Initialize with custom options
+     * / Initialize with custom options
      * MasonIt.init('.grid', {
      *   masonDelay: 500,
      *   masonPollInterval: 2000
@@ -372,10 +372,10 @@
      * @param {string|Element|NodeList|Array} [selector] - CSS selector or element(s) to refresh (omit to refresh all)
      * @returns {MasonIt} - Returns the MasonIt object for chaining
      * @example
-     * // Refresh all Mason-it grids
+     * / Refresh all Mason-it grids
      * MasonIt.refresh();
      *
-     * // Refresh specific grid
+     * / Refresh specific grid
      * MasonIt.refresh('#my-grid');
      */
     refresh: function (selector) {
@@ -409,10 +409,10 @@
      * @param {string|Element|NodeList|Array} [selector] - CSS selector or element(s) to destroy (omit to destroy all)
      * @returns {MasonIt} - Returns the MasonIt object for chaining
      * @example
-     * // Remove Mason-it from all grids
+     * / Remove Mason-it from all grids
      * MasonIt.destroy();
      *
-     * // Remove Mason-it from specific grid
+     * / Remove Mason-it from specific grid
      * MasonIt.destroy('#my-grid');
      */
     destroy: function (selector) {
@@ -436,10 +436,10 @@
      * @param {boolean} enable - Whether to enable debug mode
      * @returns {MasonIt} - Returns the MasonIt object for chaining
      * @example
-     * // Enable debug mode
+     * / Enable debug mode
      * MasonIt.debug(true);
      *
-     * // Disable debug mode
+     * / Disable debug mode
      * MasonIt.debug(false);
      */
     debug: function (enable) {
