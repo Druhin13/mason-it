@@ -50,5 +50,5 @@ Thumbs.db
 # Miscellaneous
 node_modules/
 .DS_Store
-dist/
 misc/
+scripts/

@@ -1,16 +1,39 @@
 {
   "name": "mason-it",
   "version": "1.0.0",
-  "description": "A lightweight, zero-dependency JavaScript library for instantly transforming a CSS grid into a responsive masonry layout. Just Mason it.",
-  "license": "ISC",
-  "author": "",
-  "type": "commonjs",
-  "main": "mason-it.js",
+  "description": "A lightweight, zero-dependency JavaScript library for instantly transforming a CSS grid into a responsive masonry layout. Just mason it.",
+  "license": "MIT",
+  "author": "Druhin13",
+  "main": "dist/mason-it.min.js",
+  "module": "dist/mason-it.esm.js",
+  "browser": "dist/mason-it.min.js",
+  "unpkg": "dist/mason-it.min.js",
+  "jsdelivr": "dist/mason-it.min.js",
+  "files": [
+    "dist",
+    "src"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "node scripts/build.js",
+    "prepublishOnly": "npm run build"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Druhin13/mason-it.git"
+  },
+  "keywords": [
+    "masonry",
+    "grid",
+    "layout",
+    "css-grid",
+    "responsive",
+    "javascript"
+  ],
+  "bugs": {
+    "url": "https://github.com/Druhin13/mason-it/issues"
+  },
+  "homepage": "https://github.com/Druhin13/mason-it#readme",
   "devDependencies": {
-    "@rollup/plugin-terser": "^0.4.4",
-    "rollup": "^4.40.2"
+    "terser": "^5.26.0"
   }
 }
