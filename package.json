@@ -1,6 +1,6 @@
 {
   "name": "mason-it",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A lightweight, zero-dependency JavaScript library for instantly transforming a CSS grid into a responsive masonry layout. Just mason it.",
   "license": "MIT",
   "author": "Druhin13",
