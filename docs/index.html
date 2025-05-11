@@ -6,17 +6,92 @@
     <title>
       Mason-it | The Zero-Dependency Masonry Layout Library for CSS Grid
     </title>
+
+    <!-- Primary Meta Tags -->
     <meta
       name="description"
       content="Mason-it transforms standard CSS Grid layouts into beautiful, responsive masonry arrangements with minimal effort and zero dependencies."
     />
+    <meta
+      name="keywords"
+      content="masonry layout, CSS grid, JavaScript library, responsive design, web development"
+    />
+    <meta name="author" content="Druhin13" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://druhin13.github.io/mason-it/" />
+
+    <!-- Favicon -->
     <link rel="icon" href="assets/mason-it-icon.png" type="image/png" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://druhin13.github.io/mason-it/" />
+    <meta
+      property="og:title"
+      content="Mason-it | The Zero-Dependency Masonry Layout Library for CSS Grid"
+    />
+    <meta
+      property="og:description"
+      content="Mason-it transforms standard CSS Grid layouts into beautiful, responsive masonry arrangements with minimal effort and zero dependencies."
+    />
+    <meta
+      property="og:image"
+      content="https://druhin13.github.io/mason-it/assets/mason-it-og.png"
+    />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:url"
+      content="https://druhin13.github.io/mason-it/"
+    />
+    <meta
+      property="twitter:title"
+      content="Mason-it | The Zero-Dependency Masonry Layout Library for CSS Grid"
+    />
+    <meta
+      property="twitter:description"
+      content="Mason-it transforms standard CSS Grid layouts into beautiful, responsive masonry arrangements with minimal effort and zero dependencies."
+    />
+    <meta
+      property="twitter:image"
+      content="https://druhin13.github.io/mason-it/assets/mason-it-og.png"
+    />
+
     <link rel="stylesheet" href="demo.css" />
     <script
       src="https://cdn.jsdelivr.net/npm/mason-it@1.0.1/dist/mason-it.min.js"
       defer
     ></script>
     <script src="demo.js" defer></script>
+
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Mason-it",
+        "description": "A zero-dependency JavaScript library that transforms standard CSS Grid layouts into beautiful, responsive masonry arrangements.",
+        "applicationCategory": "WebApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Druhin13",
+          "url": "https://github.com/Druhin13"
+        },
+        "sourceOrganization": {
+          "@type": "Organization",
+          "name": "GitHub",
+          "url": "https://github.com"
+        }
+      }
+    </script>
   </head>
   <body>
     <header class="main-header">
@@ -883,6 +958,26 @@ window.addEventListener('load', function() {
                 notice, but your performance metrics will thank you.
               </p>
             </div>
+
+            <div class="tip-card">
+              <h3>Meeting Dominance</h3>
+              <p>
+                Start every stand-up by saying "I've optimized our masonry
+                layouts with mason-it." Nobody will know what you're talking
+                about, but they'll be too embarrassed to ask, and you'll seem
+                productive for the rest of the sprint.
+              </p>
+            </div>
+
+            <div class="tip-card">
+              <h3>Dating Developers</h3>
+              <p>
+                If you're on a date with another developer, casually mention you
+                use mason-it for all your masonry layouts. If they don't
+                immediately propose marriage, they weren't worth your time
+                anyway.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -891,12 +986,26 @@ window.addEventListener('load', function() {
         <div class="container">
           <h2 class="section-title">Browser Support</h2>
           <p class="section-desc">
-            Works everywhere except Internet Explorer, because it's May 11, 2025
+            Works everywhere except Internet Explorer, because it's
+            <span id="current-date">May 11, 2025</span>
             and if you're still supporting IE, you have bigger problems than
             masonry layouts. Mason-it relies on modern browser features like
             <code>getComputedStyle</code> and
             <code>requestAnimationFrame</code>.
           </p>
+
+          <script>
+            document.addEventListener("DOMContentLoaded", function () {
+              const today = new Date();
+              const options = {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              };
+              document.getElementById("current-date").textContent =
+                today.toLocaleDateString("en-US", options);
+            });
+          </script>
 
           <div class="browser-grid">
             <div class="browser">

@@ -246,7 +246,7 @@ The better your grid is designed, the better mason-it makes it look. We're in th
 
 ## Browser Support
 
-Works everywhere except Internet Explorer, because it's May 11, 2025 and if you're still supporting IE, you have bigger problems than masonry layouts. `mason-it` relies on `window.getComputedStyle` and `window.requestAnimationFrame`.
+Works everywhere except Internet Explorer, because it's 2025 and if you're still supporting IE, you have bigger problems than masonry layouts. `mason-it` relies on `window.getComputedStyle` and `window.requestAnimationFrame`, so there's that.
 
 <br>
 
