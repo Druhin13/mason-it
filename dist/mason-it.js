@@ -1,14 +1,14 @@
 /**
  * @file Mason-it - CSS Grid to Masonry Layout Converter
  * @author Druhin13
- * @version 1.0.0
+ * @version 1.0.1
  * @license MIT
  * @description A lightweight, dependency-free library that transforms CSS Grid into Masonry layout
  * @copyright 2025 Druhin13
  */
 
 /*!
- * Mason-it v1.0.0
+ * Mason-it v1.0.1
  * ┌─┐┌─┐┌─┐┌─┐┌┐┌   ┬┌┬┐
  * │││├─┤└─┐│ ││││───│ │
  * └┴┘┴ ┴└─┘└─┘┘└┘   ┴ ┴
@@ -22,7 +22,10 @@
  *
  */
 (function () {
-  // Mason-it requires modern browser APIs
+  /**
+   * Feature detection for required browser APIs
+   * Exits early if essential features are missing
+   */
   if (
     typeof window.getComputedStyle !== "function" ||
     typeof window.requestAnimationFrame !== "function"
@@ -45,7 +48,7 @@
    * @type {string}
    * @private
    */
-  var masonItMascotInline = "[■o‿o■]"; // Inline version for logs
+  var masonItMascotInline = "[■o‿o■]";
 
   /**
    * Registry tracking all initialized Mason-it grids
@@ -66,7 +69,15 @@
    * @type {string}
    * @private
    */
-  var MasonItVersion = "1.0.0";
+  var MasonItVersion = "1.0.1";
+
+  /**
+   * Set of elements with pending arrangement operations
+   * Prevents duplicate layout calculations in the same animation frame
+   * @type {Set<Element>}
+   * @private
+   */
+  var MasonItArrangePending = new Set();
 
   /**
    * Console logger for Mason-it with mascot branding
@@ -101,6 +112,7 @@
 
   /**
    * Core Mason-it layout function that applies the masonry layout to a grid
+   * This function performs the actual DOM reads/writes
    * @private
    * @param {Element} el - The grid element to arrange as masonry
    */
@@ -108,38 +120,140 @@
     try {
       masonItLog("Arranging masonry layout for", el);
       var gap = parseFloat(getComputedStyle(el).gap) || 0;
-      var masonItItems = Array.prototype.filter.call(el.children, function (c) {
-        return c.nodeType === 1 && c.tagName !== "TEMPLATE";
-      });
-      var masonItCols =
-        getComputedStyle(el).gridTemplateColumns.split(" ").length;
 
-      // Reset all items to default positioning
-      masonItItems.forEach(function (item) {
+      /**
+       * Find all potential grid items (direct children that aren't template elements)
+       * @type {Element[]}
+       */
+      var allPotentialMasonItItems = Array.prototype.filter.call(
+        el.children,
+        function (c) {
+          return c.nodeType === 1 && c.tagName !== "TEMPLATE";
+        }
+      );
+
+      // Reset margins for all potential items to ensure clean slate
+      allPotentialMasonItItems.forEach(function (item) {
         item.style.removeProperty("margin-top");
       });
 
-      // Not enough columns for masonry effect
-      if (masonItCols < 2) {
-        masonItLog("Not enough columns for masonry effect");
+      /**
+       * Get only the visible items for layout calculation
+       * @type {Element[]}
+       */
+      var visibleMasonItItems = Array.prototype.filter.call(
+        el.children,
+        function (c) {
+          return (
+            c.nodeType === 1 &&
+            c.tagName !== "TEMPLATE" &&
+            getComputedStyle(c).display !== "none"
+          );
+        }
+      );
+
+      // Exit early if no visible items
+      if (visibleMasonItItems.length === 0) {
+        masonItLog("No visible items to arrange in", el);
         return;
       }
 
-      // Create the masonry effect with negative margins
-      for (var i = masonItCols; i < masonItItems.length; i++) {
-        var currentItem = masonItItems[i],
-          itemAbove = masonItItems[i - masonItCols];
-        var spaceGap =
-          currentItem.getBoundingClientRect().top -
-          itemAbove.getBoundingClientRect().bottom;
+      // Get column count from grid template columns
+      var masonItCols =
+        getComputedStyle(el).gridTemplateColumns.split(" ").length;
+
+      // Exit if not enough columns or items for masonry effect
+      if (masonItCols < 2 || visibleMasonItItems.length <= masonItCols) {
+        masonItLog(
+          "Not enough columns (" +
+            masonItCols +
+            ") or visible items (" +
+            visibleMasonItItems.length +
+            ") for masonry effect on",
+          el
+        );
+        return;
+      }
+
+      // Apply masonry effect by calculating and setting negative margins
+      for (var i = masonItCols; i < visibleMasonItItems.length; i++) {
+        var currentItem = visibleMasonItItems[i],
+          itemAbove = visibleMasonItItems[i - masonItCols];
+        if (!itemAbove) continue;
+
+        var currentItemRect = currentItem.getBoundingClientRect();
+        var itemAboveRect = itemAbove.getBoundingClientRect();
+        var spaceGap = currentItemRect.top - itemAboveRect.bottom;
 
         if (spaceGap !== gap) {
-          currentItem.style.marginTop = "-" + (spaceGap - gap) + "px";
+          var marginTopValue = spaceGap - gap;
+
+          // Perform safety checks to prevent invalid margins
+          if (!isFinite(marginTopValue)) {
+            masonItLog(
+              "Warning: Calculated non-finite margin-top for item:",
+              currentItem
+            );
+            continue;
+          }
+          if (
+            Math.abs(marginTopValue) > window.innerHeight * 2 &&
+            window.innerHeight > 0
+          ) {
+            masonItLog(
+              "Warning: Calculated excessively large margin-top (" +
+                marginTopValue +
+                "px) for item:",
+              currentItem
+            );
+            continue;
+          }
+
+          // Apply the calculated negative margin
+          currentItem.style.marginTop = "-" + marginTopValue + "px";
         }
       }
-      masonItLog("Mason-it layout arranged successfully ✓");
+      masonItLog("Mason-it layout arranged successfully for", el, "✓");
     } catch (err) {
       masonItHandleError("arrange", err);
+    }
+  }
+
+  /**
+   * Schedules the masonItArrange function using requestAnimationFrame
+   * Prevents multiple arrangements for the same element within a single frame
+   * @private
+   * @param {Element} el - The grid element to schedule for arrangement
+   */
+  function scheduleMasonItArrange(el) {
+    // Skip scheduling if element is no longer valid for arrangement
+    if (!MasonItRegistry.has(el) && !document.body.contains(el)) {
+      masonItLog(
+        "Skipping schedule arrange for element not in registry or DOM:",
+        el
+      );
+      MasonItArrangePending.delete(el); // Clean up if it was pending
+      return;
+    }
+
+    // Only schedule if not already pending in this animation frame
+    if (!MasonItArrangePending.has(el)) {
+      MasonItArrangePending.add(el);
+      window.requestAnimationFrame(function () {
+        // Recheck element validity before performing expensive operations
+        if (
+          MasonItRegistry.has(el) ||
+          el.closest('[data-mason-it-active="true"]')
+        ) {
+          masonItArrange(el);
+        } else {
+          masonItLog(
+            "Skipping arrange for element no longer active/valid in rAF callback:",
+            el
+          );
+        }
+        MasonItArrangePending.delete(el);
+      });
     }
   }
 
@@ -183,7 +297,6 @@
           : delayMatch
           ? +delayMatch[1]
           : 0;
-
       var masonPollInterval =
         userOpts && userOpts.masonPollInterval != null
           ? userOpts.masonPollInterval
@@ -200,37 +313,44 @@
         created: new Date().toISOString(),
       };
 
-      /**
-       * Executes the masonry arrangement for this element
-       * @private
-       */
-      function runMasonIt() {
-        masonItArrange(el);
-      }
-
       // Initial render (with optional delay)
       if (masonDelay) {
         masonItLog("Setting initial layout delay for", masonDelay, "ms");
-        masonItRecord.timeout = setTimeout(runMasonIt, masonDelay);
-      } else runMasonIt();
+        masonItRecord.timeout = setTimeout(function () {
+          scheduleMasonItArrange(el);
+        }, masonDelay);
+      } else {
+        scheduleMasonItArrange(el);
+      }
 
-      // Polling for dynamic content changes
+      // Polling for dynamic content changes if specified
       if (masonPollInterval) {
         masonItLog("Setting poll interval for", masonPollInterval, "ms");
-        masonItRecord.interval = setInterval(runMasonIt, masonPollInterval);
+        masonItRecord.interval = setInterval(function () {
+          scheduleMasonItArrange(el);
+        }, masonPollInterval);
       }
 
       // Auto-update with MutationObserver for better performance
       if (typeof MutationObserver === "function") {
         masonItLog("Setting up Mason-it observer for dynamic content");
-        masonItRecord.observer = new MutationObserver(runMasonIt);
+        masonItRecord.observer = new MutationObserver(function (mutationsList) {
+          for (var mutation of mutationsList) {
+            if (mutation.type === "childList") {
+              masonItLog(
+                "MutationObserver detected childList change, scheduling arrange for",
+                el
+              );
+              scheduleMasonItArrange(el);
+              return; // Stop checking once we've found a relevant change
+            }
+          }
+        });
         masonItRecord.observer.observe(el, { childList: true });
       }
 
       // Store the grid in our registry
       MasonItRegistry.set(el, masonItRecord);
-
-      // Add a data attribute to indicate this element has been Mason-ited
       el.setAttribute("data-mason-it-active", "true");
     } catch (err) {
       masonItHandleError("setup", err);
@@ -249,7 +369,6 @@
         "[data-mason-it]:not([data-mason-it-active='true'])"
       );
       masonItLog("Found", masonItElements.length, "grids to Mason-it");
-
       for (var i = 0; i < masonItElements.length; i++) {
         masonItSetup(masonItElements[i], {});
       }
@@ -259,21 +378,17 @@
   }
 
   /**
-   * Refreshes all initialized Mason-it grids
+   * Schedules a refresh for all initialized Mason-it grids
+   * Used internally by public refresh methods and event handlers
    * @private
    */
-  function masonItRefreshAll() {
-    try {
-      masonItLog("Refreshing all Mason-ited grids");
-      var count = 0;
-      MasonItRegistry.forEach(function (rec) {
-        masonItArrange(rec.el);
-        count++;
-      });
-      masonItLog("Refreshed", count, "Mason-it grids");
-    } catch (err) {
-      masonItHandleError("refresh-all", err);
-    }
+  function masonItInternalRefreshAll() {
+    masonItLog(
+      "Scheduling refresh for all " + MasonItRegistry.size + " Mason-ited grids"
+    );
+    MasonItRegistry.forEach(function (rec) {
+      scheduleMasonItArrange(rec.el);
+    });
   }
 
   /**
@@ -288,19 +403,23 @@
         masonItLog("Grid not Mason-ited, nothing to teardown", el);
         return;
       }
-
       masonItLog("Un-Mason-iting grid", el);
+
+      // Clear any scheduled events
       clearTimeout(rec.timeout);
       clearInterval(rec.interval);
       if (rec.observer) rec.observer.disconnect();
 
-      // Reset the layout by applying one more time
-      masonItArrange(el);
+      // Remove from pending arrangements
+      MasonItArrangePending.delete(el);
 
-      // Remove from registry and clear data attribute
+      // Reset the layout by arranging one last time (will clear margins)
+      // Schedule this to avoid conflicts with any in-progress operations
+      scheduleMasonItArrange(el);
+
+      // Remove element from registry and clear active attribute
       MasonItRegistry.delete(el);
       el.removeAttribute("data-mason-it-active");
-
       masonItLog("Grid successfully un-Mason-ited");
     } catch (err) {
       masonItHandleError("teardown", err);
@@ -315,18 +434,11 @@
    */
   function masonItFindElements(selector) {
     try {
-      if (typeof selector === "string") {
+      if (typeof selector === "string")
         return document.querySelectorAll(selector);
-      }
-      if (selector instanceof Element) {
-        return [selector];
-      }
-      if (
-        NodeList.prototype.isPrototypeOf(selector) ||
-        Array.isArray(selector)
-      ) {
+      if (selector instanceof Element) return [selector];
+      if (NodeList.prototype.isPrototypeOf(selector) || Array.isArray(selector))
         return selector;
-      }
       return [];
     } catch (err) {
       masonItHandleError("find-elements", err);
@@ -346,10 +458,10 @@
      * @param {MasonItOptions} [options={}] - Configuration options
      * @returns {MasonIt} - Returns the MasonIt object for chaining
      * @example
-     * / Initialize with default options
+     * // Initialize with default options
      * MasonIt.init('.grid');
      *
-     * / Initialize with custom options
+     * // Initialize with custom options
      * MasonIt.init('.grid', {
      *   masonDelay: 500,
      *   masonPollInterval: 2000
@@ -359,7 +471,6 @@
       masonItLog("📌 init() called with", selector, options);
       var els = masonItFindElements(selector);
       masonItLog("Found", els.length, "elements to Mason-it");
-
       for (var i = 0; i < els.length; i++) {
         masonItSetup(els[i], options || {});
       }
@@ -368,14 +479,15 @@
 
     /**
      * Recalculates and applies Mason-it layout to specified element(s) or all grids
+     * Uses requestAnimationFrame for optimal performance
      * @memberof MasonIt
      * @param {string|Element|NodeList|Array} [selector] - CSS selector or element(s) to refresh (omit to refresh all)
      * @returns {MasonIt} - Returns the MasonIt object for chaining
      * @example
-     * / Refresh all Mason-it grids
+     * // Refresh all Mason-it grids
      * MasonIt.refresh();
      *
-     * / Refresh specific grid
+     * // Refresh specific grid
      * MasonIt.refresh('#my-grid');
      */
     refresh: function (selector) {
@@ -383,10 +495,17 @@
       if (selector) {
         var els = masonItFindElements(selector);
         for (var i = 0; i < els.length; i++) {
-          masonItArrange(els[i]);
+          if (MasonItRegistry.has(els[i])) {
+            scheduleMasonItArrange(els[i]);
+          } else {
+            masonItLog(
+              "Skipping refresh for element not in MasonItRegistry:",
+              els[i]
+            );
+          }
         }
       } else {
-        masonItRefreshAll();
+        masonItInternalRefreshAll();
       }
       return this; // For chaining
     },
@@ -399,6 +518,7 @@
      * @returns {MasonIt} - Returns the MasonIt object for chaining
      */
     reload: function (selector) {
+      /* Deprecated */
       masonItLog("⚠️ reload() is deprecated, please use refresh() instead");
       return this.refresh(selector);
     },
@@ -409,24 +529,24 @@
      * @param {string|Element|NodeList|Array} [selector] - CSS selector or element(s) to destroy (omit to destroy all)
      * @returns {MasonIt} - Returns the MasonIt object for chaining
      * @example
-     * / Remove Mason-it from all grids
+     * // Remove Mason-it from all grids
      * MasonIt.destroy();
      *
-     * / Remove Mason-it from specific grid
+     * // Remove Mason-it from specific grid
      * MasonIt.destroy('#my-grid');
      */
     destroy: function (selector) {
       masonItLog("❌ destroy() called with", selector || "all grids");
+      var elementsToTeardown = [];
       if (selector) {
-        var els = masonItFindElements(selector);
-        for (var i = 0; i < els.length; i++) {
-          masonItTeardown(els[i]);
-        }
+        elementsToTeardown = masonItFindElements(selector);
       } else {
-        MasonItRegistry.forEach(function (rec, el) {
-          masonItTeardown(el);
-        });
+        // Create a snapshot of elements to avoid issues if registry changes during iteration
+        elementsToTeardown = Array.from(MasonItRegistry.keys());
       }
+      elementsToTeardown.forEach(function (elToTeardown) {
+        masonItTeardown(elToTeardown);
+      });
       return this; // For chaining
     },
 
@@ -436,20 +556,22 @@
      * @param {boolean} enable - Whether to enable debug mode
      * @returns {MasonIt} - Returns the MasonIt object for chaining
      * @example
-     * / Enable debug mode
+     * // Enable debug mode
      * MasonIt.debug(true);
      *
-     * / Disable debug mode
+     * // Disable debug mode
      * MasonIt.debug(false);
      */
     debug: function (enable) {
       MasonItDebugMode = !!enable;
-      console.log(
-        "\n" +
-          masonItMascot +
-          "\n\nMason says: Debug mode " +
-          (MasonItDebugMode ? "enabled 🔍" : "disabled 🔒")
-      );
+      if (console && console.log) {
+        console.log(
+          "\n" +
+            masonItMascot +
+            "\n\nMason says: Debug mode " +
+            (MasonItDebugMode ? "enabled 🔍" : "disabled 🔒")
+        );
+      }
       return this; // For chaining
     },
 
@@ -458,7 +580,7 @@
      * @memberof MasonIt
      * @returns {string} - Version string
      * @example
-     * const version = MasonIt.version(); // Returns "1.0.0"
+     * const version = MasonIt.version(); // Returns "1.0.1"
      */
     version: function () {
       return MasonItVersion;
@@ -476,11 +598,19 @@
     },
   };
 
-  // Auto-init when DOM is ready
-  document.addEventListener("DOMContentLoaded", masonItAutoSetup);
+  /**
+   * Initialize Mason-it when DOM is ready
+   * Handles both loading and loaded states
+   */
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", masonItAutoSetup);
+  } else {
+    // DOMContentLoaded already fired, initialize immediately
+    masonItAutoSetup();
+  }
 
   /**
-   * Window resize handler with requestAnimationFrame for performance
+   * Window resize handler with requestAnimationFrame for performance optimization
    * @private
    */
   var masonItResizeTicking = false;
@@ -489,41 +619,56 @@
       masonItResizeTicking = true;
       window.requestAnimationFrame(function () {
         masonItLog("🔄 Window resize detected - refreshing all Mason-it grids");
-        masonItRefreshAll();
+        masonItInternalRefreshAll();
         masonItResizeTicking = false;
       });
     }
   });
 
-  // Listen for custom refresh event
+  /**
+   * Custom events for triggering Mason-it refresh
+   * @private
+   */
   window.addEventListener("refresh:mason-it", function () {
-    masonItLog("🔄 Custom refresh event received");
-    masonItRefreshAll();
+    masonItLog("🔄 Custom refresh event 'refresh:mason-it' received");
+    masonItInternalRefreshAll();
   });
 
-  // For backward compatibility, also listen to the old reload event
+  /**
+   * Legacy event name support
+   * @private
+   * @deprecated since 1.0.0
+   */
   window.addEventListener("reload:mason-it", function () {
-    masonItLog(
-      "⚠️ 'reload:mason-it' event is deprecated, please use 'refresh:mason-it' instead"
+    /* Deprecated */ masonItLog(
+      "⚠️ 'reload:mason-it' event is deprecated, use 'refresh:mason-it'"
     );
-    masonItRefreshAll();
+    masonItInternalRefreshAll();
   });
 
-  // Module exports for various module systems
+  /**
+   * Module exports for various module systems
+   * Support CommonJS, AMD, and browser globals
+   */
   if (typeof module !== "undefined" && module.exports) {
     module.exports = window.MasonIt;
+    if (typeof window !== "undefined") window.MasonIt = window.MasonIt;
   } else if (typeof define === "function" && define.amd) {
     define([], function () {
       return window.MasonIt;
     });
   }
 
-  // Log initialization with full mascot art
-  console.log(
-    masonItMascot +
-      "\n\nMason-it v" +
-      MasonItVersion +
-      " initialized!" +
-      "\nMade with ❤️ by Druhin13\n"
-  );
+  /**
+   * Log initialization with full mascot art
+   * @private
+   */
+  if (console && console.log) {
+    console.log(
+      masonItMascot +
+        "\n\nMason-it v" +
+        MasonItVersion +
+        " initialized!\nMade with ❤️ by Druhin13\n"
+    );
+  }
 })();
