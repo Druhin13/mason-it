@@ -3,464 +3,1029 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mason-it - Stop fighting with masonry layouts</title>
-    <link rel="icon" href="/docs/assets/mason-it-icon.png" type="image/png" />
+    <title>
+      Mason-it | The Zero-Dependency Masonry Layout Library for CSS Grid
+    </title>
+    <meta
+      name="description"
+      content="Mason-it transforms standard CSS Grid layouts into beautiful, responsive masonry arrangements with minimal effort and zero dependencies."
+    />
+    <link rel="icon" href="assets/mason-it-icon.png" type="image/png" />
     <link rel="stylesheet" href="demo.css" />
     <script
-      src="https://cdn.jsdelivr.net/npm/mason-it@1.0.0/dist/mason-it.min.js"
+      src="https://cdn.jsdelivr.net/npm/mason-it@1.0.1/dist/mason-it.min.js"
       defer
     ></script>
     <script src="demo.js" defer></script>
   </head>
   <body>
-    <header>
-      <div class="header-container">
-        <div class="logo-container">
-          <img
-            src="/docs/assets/mason-it-icon.png"
-            alt="mason-it mascot"
-            class="logo"
-          />
-          <h1>mason-it</h1>
-        </div>
-        <nav>
-          <a href="#examples">Examples</a>
+    <header class="main-header">
+      <div class="header-container container">
+        <a href="#" class="header-logo">
+          <img src="assets/mason-it-icon.png" alt="" aria-hidden="true" />
+          <span>Mason-it</span>
+        </a>
+        <nav class="main-nav" id="mainNav">
+          <a href="#features">Features</a>
+          <a href="#demo">Demo</a>
+          <a href="#installation">Installation</a>
           <a href="#api">API</a>
-          <a href="#customization">Customization</a>
-          <a href="https://github.com/Druhin13/mason-it" target="_blank"
-            >GitHub</a
+          <a
+            href="https://github.com/Druhin13/mason-it"
+            class="nav-github"
+            target="_blank"
+            rel="noopener"
           >
-          <a href="https://www.npmjs.com/package/mason-it" target="_blank"
-            >npm</a
-          >
+            <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+              <path
+                fill-rule="evenodd"
+                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21-.15.46-.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+              ></path>
+            </svg>
+            GitHub
+          </a>
         </nav>
+        <button
+          class="mobile-menu-button"
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+          aria-controls="mainNav"
+        >
+          <span class="menu-icon"></span>
+        </button>
+        <div class="version-pill" aria-label="Current version: 1.0.1">
+          v1.0.1
+        </div>
       </div>
     </header>
 
     <main>
       <section class="hero">
-        <div class="hero-content">
-          <h1>
-            Just <span class="highlight">mason it</span>!
-          </h1>
-          <p>
-            The masonry layout library that just works.
-          </p>
-          <p class="small">
-            5KB of pure, dependency-free, why-didn't-I-think-of-this simplicity.
-          </p>
-
-          <div class="cta-buttons">
-            <a href="#start" class="cta-button primary">Get Started</a>
-            <a
-              href="https://github.com/Druhin13/mason-it"
-              class="cta-button secondary"
-              >View on GitHub</a
-            >
-          </div>
-
-          <div class="installation-code">
-            <div class="code-tabs">
-              <button class="tab-button active" data-tab="npm">npm</button>
-              <button class="tab-button" data-tab="cdn">CDN</button>
+        <div class="container">
+          <div class="hero-content">
+            <h1>
+              <span style="display: inline" class="accent"
+                >So you've wasted half your life</span
+              >
+              <span style="display: inline"
+                >trying to make a masonry layout?</span
+              >
+            </h1>
+            <p class="hero-subtitle">
+              Mason-it is a tiny, zero-dependency library born from pure
+              frustration. It actually respects your CSS Grid (shocking, right?)
+              while transforming it into a beautiful masonry layout. No hacky
+              overrides, no bizarre margins. Just your grid, masoned.
+            </p>
+            <div class="hero-actions">
+              <a href="#installation" class="button primary-button"
+                >Get Started</a
+              >
+              <a href="#demo" class="button secondary-button">Try the Demo</a>
             </div>
-            <div class="code-block active" id="npm">
-              <pre><code>npm install mason-it</code></pre>
-            </div>
-            <div class="code-block" id="cdn">
-              <pre><code>&lt;script src="https://cdn.jsdelivr.net/npm/mason-it@1.0.0/dist/mason-it.min.js"&gt;&lt;/script&gt;</code></pre>
+            <div class="release-badge">
+              <div class="dot"></div>
+              Just Released: v1.0.1 with improved rendering and hidden element
+              detection
             </div>
           </div>
-        </div>
-        <div class="hero-image">
-          <img
-            src="/docs/assets/mason-it-icon.png"
-            alt="mason-it in action"
-            class="hero-img"
-          />
+          <div class="hero-visual">
+            <div class="hero-image-wrapper">
+              <img
+                src="assets/mason-it-hero1.svg"
+                alt="Mason-it: illustration of masons building a wall"
+                class="hero-image"
+                id="hero-image"
+              />
+            </div>
+          </div>
+
+          <script>
+            const heroImage = document.getElementById("hero-image");
+            const images = ["hero1.svg", "hero2.svg", "hero3.svg"];
+            let index = 0;
+
+            setInterval(() => {
+              heroImage.classList.add("fade-out");
+
+              setTimeout(() => {
+                index = (index + 1) % images.length;
+                heroImage.src = `assets/mason-it-${images[index]}`;
+                heroImage.classList.remove("fade-out");
+              }, 300);
+            }, 3000);
+          </script>
         </div>
       </section>
 
-      <section id="start" class="getting-started">
-        <h2>
-          The <span class="underline">Stupidly Simple</span> Getting Started
-          Guide
-        </h2>
-        <div class="getting-started-grid">
-          <div class="step">
-            <div class="step-number">1</div>
-            <h3>Make a boring CSS Grid</h3>
-            <div class="code-container">
-              <pre><code>.standard-grid {
+      <section class="intro" id="intro">
+        <div class="container">
+          <h2>Other masonry libraries are allergic to your CSS Grid.</h2>
+          <div class="intro-grid">
+            <div class="intro-point">
+              <h3>The Problem</h3>
+              <p>
+                While you're trying to build a clean, modern layout with CSS
+                Grid (you know, like a sane person)... most masonry libraries
+                are off in a corner doing their own weird thing. Completely
+                ignoring your carefully crafted grid settings. Adding bizarre
+                margins. Treating CSS Grid like it's a communicable disease.
+              </p>
+            </div>
+            <div class="intro-point">
+              <h3>The Mason-it Solution</h3>
+              <p>
+                What if... and stay with me here... we just let you design your
+                grid however the hell you want, and then <em>just mason it</em>?
+                Crazy, right? You keep your grid-template-columns, you keep your
+                gap property, you keep everything exactly how you designed it.
+                We just make it masonry.
+              </p>
+            </div>
+          </div>
+
+          <div class="demo-comparison">
+            <div class="demo-side">
+              <h4>Standard CSS Grid</h4>
+              <p class="demo-caption">
+                Items maintain row alignment, creating gaps
+              </p>
+              <div class="demo-grid standard-grid">
+                <div class="grid-item h1"><span>1</span></div>
+                <div class="grid-item h2"><span>2</span></div>
+                <div class="grid-item h3"><span>3</span></div>
+                <div class="grid-item h1"><span>4</span></div>
+                <div class="grid-item h2"><span>5</span></div>
+                <div class="grid-item h3"><span>6</span></div>
+                <div class="grid-item h2"><span>7</span></div>
+                <div class="grid-item h3"><span>8</span></div>
+                <div class="grid-item h1"><span>9</span></div>
+              </div>
+            </div>
+            <div class="demo-side">
+              <h4>With Mason-it</h4>
+              <p class="demo-caption">Items flow perfectly without gaps</p>
+              <div class="demo-grid mason-grid" data-mason-it>
+                <div class="grid-item h1"><span>1</span></div>
+                <div class="grid-item h2"><span>2</span></div>
+                <div class="grid-item h3"><span>3</span></div>
+                <div class="grid-item h1"><span>4</span></div>
+                <div class="grid-item h2"><span>5</span></div>
+                <div class="grid-item h3"><span>6</span></div>
+                <div class="grid-item h2"><span>7</span></div>
+                <div class="grid-item h3"><span>8</span></div>
+                <div class="grid-item h1"><span>9</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="features" id="features">
+        <div class="container">
+          <h2 class="section-title">Here's why you absolutely need this</h2>
+          <div class="features-grid">
+            <div class="feature">
+              <div class="feature-icon">🧱</div>
+              <h3>True CSS Grid Based</h3>
+              <p>
+                Unlike those <em>other</em> libraries that just pretend CSS Grid
+                doesn't exist, like it's their ex from high school they're
+                avoiding at the reunion. Mason-it actually respects your grid.
+              </p>
+            </div>
+            <div class="feature">
+              <div class="feature-icon">🚀</div>
+              <h3>Zero Dependencies</h3>
+              <p>
+                Because your website shouldn't need to download half the
+                internet just to display some boxes in a pretty pattern. Just
+                6KB minified and gzipped!
+              </p>
+            </div>
+            <div class="feature">
+              <div class="feature-icon">⚡</div>
+              <h3>Stupidly Simple API</h3>
+              <p>
+                One attribute. ONE. <code>data-mason-it</code>. That's it. If
+                you can't handle that, maybe try finger painting instead of web
+                development.
+              </p>
+            </div>
+            <div class="feature">
+              <div class="feature-icon">🔄</div>
+              <h3>Dynamic Content Ready</h3>
+              <p>
+                Uses <code>MutationObserver</code> to automatically update when
+                content changes, because who wants to manually call refresh
+                functions every time?
+              </p>
+            </div>
+            <div class="feature">
+              <div class="feature-icon">💧</div>
+              <h3>
+                Silky Smooth Updates <span class="new-badge">v1.0.1</span>
+              </h3>
+              <p>
+                Leverages <code>requestAnimationFrame</code> for fluid layout
+                adjustments when content changes or window resizes. No more
+                janky shifts!
+              </p>
+            </div>
+            <div class="feature">
+              <div class="feature-icon">🙈</div>
+              <h3>
+                Handles Hidden Elements <span class="new-badge">v1.0.1</span>
+              </h3>
+              <p>
+                Correctly recalculates when items use
+                <code>display: none</code>. Take that, other libraries! (not
+                name-shaming anyone in particular... <em>uhm...</em>)
+              </p>
+            </div>
+            <div class="feature">
+              <div class="feature-icon">📱</div>
+              <h3>Blazing Fast & Responsive</h3>
+              <p>
+                So fast, it makes other libraries look like they're stuck in
+                molasses. Recalculates layouts instantly, making it feel native
+                and snappy.
+              </p>
+            </div>
+            <div class="feature">
+              <div class="feature-icon">🛠️</div>
+              <h3>Doesn't Break on Images</h3>
+              <p>
+                No more layouts going haywire when images finally decide to
+                load. Mason-it actually waits for your content to be ready.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="interactive-demo" id="demo">
+        <div class="container">
+          <h2 class="section-title">Interactive Demo</h2>
+          <p class="section-desc">
+            Go ahead, poke around and see what happens. Add items, resize the
+            container, or toggle visibility - mason-it handles it all with ease.
+            This demo showcases v1.0.1's silky-smooth updates.
+          </p>
+
+          <div class="demo-layout-tools">
+            <div class="demo-tabs">
+              <button
+                id="itemCtrlBtn"
+                class="demo-tab active"
+                data-panel="itemControls"
+              >
+                Items
+              </button>
+              <button
+                id="layoutCtrlBtn"
+                class="demo-tab"
+                data-panel="layoutControls"
+              >
+                Grid Layout
+              </button>
+              <button
+                id="actionsCtrlBtn"
+                class="demo-tab"
+                data-panel="actionControls"
+              >
+                Actions
+              </button>
+            </div>
+
+            <div id="demoStats" class="demo-stats"></div>
+          </div>
+
+          <div id="itemControls" class="demo-panel active">
+            <div class="demo-controls">
+              <div class="control-group">
+                <h4>Add Items</h4>
+                <button id="addRegularItem" class="button outline-button">
+                  + Regular Item
+                </button>
+                <button id="addTallItem" class="button outline-button">
+                  + Tall Item
+                </button>
+                <button id="addColoredItem" class="button outline-button">
+                  + Colored Item
+                </button>
+                <button id="addHiddenItem" class="button outline-button">
+                  + Hidden Item
+                </button>
+              </div>
+              <div class="control-group">
+                <h4>Modify Items</h4>
+                <button id="removeLastItem" class="button outline-button">
+                  Remove Last
+                </button>
+                <button id="toggleFirstVisible" class="button outline-button">
+                  Toggle First Visible
+                </button>
+                <button id="toggleRandomVisible" class="button outline-button">
+                  Toggle Random
+                </button>
+                <button id="toggleLabels" class="button outline-button">
+                  Hide Image Labels
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div id="layoutControls" class="demo-panel">
+            <div class="demo-controls grid-controls">
+              <div class="control-group">
+                <h4>Grid Configuration</h4>
+                <div class="input-group">
+                  <label for="columnType">Column Type:</label>
+                  <select id="columnType" class="select-input">
+                    <option value="fixed">Fixed Columns</option>
+                    <option value="responsive" selected>
+                      Responsive Columns
+                    </option>
+                  </select>
+                </div>
+
+                <div
+                  id="fixedColumnsConfig"
+                  class="conditional-controls"
+                  style="display: none"
+                >
+                  <div class="input-group">
+                    <label for="columnCount">Column Count:</label>
+                    <div class="range-with-value">
+                      <input
+                        type="range"
+                        id="columnCount"
+                        min="1"
+                        max="12"
+                        value="4"
+                        class="range-input"
+                      />
+                      <span id="columnCountValue">4</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="responsiveColumnsConfig" class="conditional-controls">
+                  <div class="input-group">
+                    <label for="minColumnWidth">Min Column Width:</label>
+                    <div class="range-with-value">
+                      <input
+                        type="range"
+                        id="minColumnWidth"
+                        min="100"
+                        max="400"
+                        value="200"
+                        step="10"
+                        class="range-input"
+                      />
+                      <span id="minColumnWidthValue">200px</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="input-group">
+                  <label for="gridGap">Grid Gap:</label>
+                  <div class="range-with-value">
+                    <input
+                      type="range"
+                      id="gridGap"
+                      min="0"
+                      max="40"
+                      value="20"
+                      class="range-input"
+                    />
+                    <span id="gridGapValue">20px</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="control-group">
+                <h4>Container Size</h4>
+                <div class="input-group">
+                  <button id="resizeDemo" class="button outline-button">
+                    <span id="resizeDemoText">Enable Resize Mode</span>
+                  </button>
+                </div>
+                <div class="input-group preset-widths">
+                  <button data-width="320" class="preset-width">
+                    Mobile (320px)
+                  </button>
+                  <button data-width="768" class="preset-width">
+                    Tablet (768px)
+                  </button>
+                  <button data-width="1024" class="preset-width">
+                    Desktop (1024px)
+                  </button>
+                  <button data-width="100%" class="preset-width">
+                    Full Width
+                  </button>
+                </div>
+                <div class="current-size">
+                  <span>Current size: </span>
+                  <span id="currentWidth">Auto</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="actionControls" class="demo-panel">
+            <div class="demo-controls">
+              <div class="control-group">
+                <h4>Mason-it Controls</h4>
+                <button id="refreshLayout" class="button control-button">
+                  Refresh Layout
+                </button>
+                <button id="destroyMasonIt" class="button danger-button">
+                  Destroy Mason-it
+                </button>
+                <button id="initMasonIt" class="button success-button">
+                  Initialize Mason-it
+                </button>
+                <button id="resetDemo" class="button outline-button">
+                  Reset Demo
+                </button>
+              </div>
+              <div class="control-group">
+                <h4>Utilities</h4>
+                <button id="toggleDebug" class="button outline-button">
+                  Enable Debug Mode
+                </button>
+                <button id="showInfo" class="button outline-button">
+                  Show Version & Count
+                </button>
+                <button id="clearConsoleBtn" class="button outline-button">
+                  Clear Console
+                </button>
+                <div class="checkbox-group">
+                  <input type="checkbox" id="autoRefresh" checked />
+                  <label for="autoRefresh">Auto-refresh on config change</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="demoConsole" class="demo-console">
+            <div class="console-header">
+              <span>Console Output</span>
+              <button id="clearConsoleHeader" class="clear-button">
+                Clear
+              </button>
+            </div>
+            <div class="console-body"></div>
+          </div>
+
+          <div class="demo-wrapper" id="demoWrapper">
+            <div class="resize-handle" id="resizeHandle"></div>
+            <div id="interactiveGrid" class="interactive-grid"></div>
+          </div>
+
+          <div class="demo-code-preview">
+            <h4>Current Grid CSS</h4>
+            <div class="code-wrapper">
+              <pre><code id="gridCssCode">.interactive-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px;
+  align-items: start;
 }</code></pre>
-            </div>
-            <p>Just your regular CSS Grid. Nothing fancy here.</p>
-          </div>
-          <div class="step">
-            <div class="step-number">2</div>
-            <h3>Add the magic attribute</h3>
-            <div class="code-container">
-              <pre><code>&lt;div class="standard-grid" data-mason-it&gt;
-  &lt;div class="item"&gt;I'm just a div&lt;/div&gt;
-  &lt;div class="item"&gt;I'm taller than the others&lt;/div&gt;
-  &lt;div class="item"&gt;Short but mighty&lt;/div&gt;
-  &lt;!-- Add as many as you want --&gt;
-&lt;/div&gt;</code></pre>
-            </div>
-            <p>
-              Yes, that's it. Just <code>data-mason-it</code>. If you can't
-              handle that, maybe try finger painting?
-            </p>
-          </div>
-          <div class="step">
-            <div class="step-number">3</div>
-            <h3>There is no step 3</h3>
-            <div class="empty-step">
-              <img
-                src="/docs/assets/mason-it-icon.png"
-                alt="mason-it mascot"
-                class="step-icon"
-              />
-              <p>Seriously, that's it.</p>
-              <p>You can close this tab now and go grab some coffee.</p>
+              <button class="copy-button" aria-label="Copy to clipboard">
+                Copy
+              </button>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="examples" class="examples">
-        <h2>Actual Working Examples</h2>
-        <p class="section-subtitle">
-          Because you're probably thinking "This can't possibly be that easy..."
-        </p>
-
-        <div class="example-controls">
-          <div class="control-group">
-            <label for="column-count">Column Count:</label>
-            <div class="button-group">
-              <button class="column-button active" data-columns="2">2</button>
-              <button class="column-button" data-columns="3">3</button>
-              <button class="column-button" data-columns="4">4</button>
-              <button class="column-button" data-columns="5">5</button>
-            </div>
-          </div>
-          <div class="control-group">
-            <label for="gap-size">Gap Size:</label>
-            <div class="button-group">
-              <button class="gap-button" data-gap="10">10px</button>
-              <button class="gap-button active" data-gap="20">20px</button>
-              <button class="gap-button" data-gap="30">30px</button>
-            </div>
-          </div>
-          <div class="control-group">
-            <button id="add-item" class="action-button">Add Item</button>
-            <button id="toggle-mason" class="action-button">
-              Toggle Mason-it
+      <section class="installation" id="installation">
+        <div class="container">
+          <h2 class="section-title">Installation</h2>
+          <div class="installation-tabs" role="tablist">
+            <button
+              id="npmTab"
+              class="tab-button active"
+              role="tab"
+              aria-selected="true"
+              aria-controls="npmPanel"
+            >
+              NPM
+            </button>
+            <button
+              id="cdnTab"
+              class="tab-button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="cdnPanel"
+            >
+              CDN
+            </button>
+            <button
+              id="downloadTab"
+              class="tab-button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="downloadPanel"
+            >
+              Download
             </button>
           </div>
-        </div>
+          <div class="installation-panels">
+            <div
+              id="npmPanel"
+              class="tab-panel active"
+              role="tabpanel"
+              aria-labelledby="npmTab"
+            >
+              <div class="code-wrapper">
+                <pre><code>npm install mason-it</code></pre>
+                <button class="copy-button" aria-label="Copy to clipboard">
+                  Copy
+                </button>
+              </div>
+              <p>
+                For the keyboard warriors - you're probably already typing
+                before finishing reading this:
+              </p>
+              <div class="code-wrapper">
+                <pre><code>import MasonIt from 'mason-it';
 
-        <div class="example-container">
-          <h3>Plain CSS Grid vs mason-it</h3>
-          <div class="example-grids">
-            <div class="example-grid-wrapper">
-              <h4>Without mason-it</h4>
-              <div class="standard-grid" id="normal-grid">
-                <!-- These items will be filled by JavaScript -->
+// Magic time (call after your grid elements are in the DOM)
+// e.g., inside a DOMContentLoaded listener or your framework's onMount/useEffect hook
+MasonIt.init('.your-grid-selector', {
+  masonDelay: 100, // Optional delay before first layout (ms)
+  masonPollInterval: 0 // Optional polling interval (ms), 0 = disabled
+});</code></pre>
+                <button class="copy-button" aria-label="Copy to clipboard">
+                  Copy
+                </button>
               </div>
             </div>
-            <div class="example-grid-wrapper">
-              <h4>With mason-it</h4>
-              <div class="standard-grid" id="mason-grid" data-mason-it>
-                <!-- Identical items will be filled by JavaScript -->
+            <div
+              id="cdnPanel"
+              class="tab-panel"
+              role="tabpanel"
+              aria-labelledby="cdnTab"
+              hidden
+            >
+              <p>
+                For the copy-paste professionals - just slap this script tag at
+                the end of your body:
+              </p>
+              <div class="code-wrapper">
+                <pre><code>&lt;script src="https://cdn.jsdelivr.net/npm/mason-it@1.0.1/dist/mason-it.min.js"&gt;&lt;/script&gt;</code></pre>
+                <button class="copy-button" aria-label="Copy to clipboard">
+                  Copy
+                </button>
+              </div>
+              <p>
+                Elements with <code>data-mason-it</code> attribute will be
+                automatically initialized. Or use the JavaScript API:
+              </p>
+              <div class="code-wrapper">
+                <pre><code>// When the DOM is ready:
+MasonIt.init('.your-grid-selector');</code></pre>
+                <button class="copy-button" aria-label="Copy to clipboard">
+                  Copy
+                </button>
               </div>
             </div>
-          </div>
-        </div>
-
-        <div class="code-reveal">
-          <button id="show-code" class="show-code-button">
-            Show Me The Code
-          </button>
-          <div class="demo-code hidden">
-            <div class="code-tabs">
-              <button class="code-tab active" data-tab="html-code">HTML</button>
-              <button class="code-tab" data-tab="css-code">CSS</button>
-              <button class="code-tab" data-tab="js-code">JavaScript</button>
-            </div>
-            <div class="code-content active" id="html-code">
-              <pre><code>&lt;div class="standard-grid" data-mason-it&gt;
-  &lt;div class="item"&gt;Content 1&lt;/div&gt;
-  &lt;div class="item"&gt;Content 2&lt;/div&gt;
-  &lt;div class="item"&gt;Content 3&lt;/div&gt;
-  &lt;!-- etc. --&gt;
-&lt;/div&gt;</code></pre>
-            </div>
-            <div class="code-content" id="css-code">
-              <pre><code>.standard-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  width: 100%;
-}
-
-.item {
-  background: white;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}</code></pre>
-            </div>
-            <div class="code-content" id="js-code">
-              <pre><code>// That's it. There's no JavaScript needed.
-// mason-it just works.
-
-// But if you really want to do it in JS instead of HTML:
-MasonIt.init('.standard-grid');</code></pre>
+            <div
+              id="downloadPanel"
+              class="tab-panel"
+              role="tabpanel"
+              aria-labelledby="downloadPanel"
+              hidden
+            >
+              <p>Download the files directly from the GitHub release:</p>
+              <div class="download-options">
+                <a
+                  href="https://github.com/Druhin13/mason-it/releases/tag/v1.0.1"
+                  class="button outline-button"
+                  download
+                  >Check GitHub Release</a
+                >
+              </div>
+              <p>Then include in your HTML:</p>
+              <div class="code-wrapper">
+                <pre><code>&lt;script src="path/to/mason-it.min.js"&gt;&lt;/script&gt;</code></pre>
+                <button class="copy-button" aria-label="Copy to clipboard">
+                  Copy
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="customization" class="customization">
-        <h2>Advanced Configuration</h2>
-        <p class="section-subtitle">
-          For the overachievers who can't leave well enough alone
-        </p>
+      <section class="css-setup" id="css-setup">
+        <div class="container">
+          <h2 class="section-title">A Note on CSS for Optimal Results</h2>
+          <p class="section-desc">
+            Mason-it works by adjusting the margin-top of your grid items. For
+            the best results, there's one critical CSS property you need:
+          </p>
 
-        <div class="config-cards">
-          <div class="config-card">
-            <h3>HTML Attribute Style</h3>
-            <p>For the purists who want everything in their markup:</p>
-            <div class="code-container">
-              <pre><code>&lt;div class="standard-grid" 
-     data-mason-it="mason-delay:{500} mason-poll-interval:{2000}"&gt;
-  &lt;!-- Your grid items --&gt;
-&lt;/div&gt;</code></pre>
-            </div>
+          <div class="code-wrapper">
+            <pre><code>.your-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  
+  /* ⭐ THIS IS CRUCIAL ⭐ */
+  align-items: start;
+}</code></pre>
+            <button class="copy-button" aria-label="Copy to clipboard">
+              Copy
+            </button>
           </div>
 
-          <div class="config-card">
-            <h3>JavaScript Style</h3>
-            <p>For the control freaks who need to do everything in JS:</p>
-            <div class="code-container">
-              <pre><code>MasonIt.init('.standard-grid', {
-  masonDelay: 500,         // Wait 500ms before first layout
-  masonPollInterval: 2000  // Check for changes every 2s
-});</code></pre>
+          <div class="tip-box">
+            <div class="tip-icon">💡</div>
+            <div class="tip-content">
+              <strong>Why <code>align-items: start</code> matters:</strong>
+              <p>
+                CSS Grid's default <code>align-items: stretch</code> will make
+                all items in a row the same height, negating the visual masonry
+                effect you're after. Using <code>align-items: start</code> tells
+                the grid to align items to the top, letting them keep their
+                natural height differences.
+              </p>
             </div>
           </div>
         </div>
+      </section>
 
-        <div class="api-methods">
-          <h3>API Methods</h3>
-          <p>Yes, there are methods. No, you probably won't need them.</p>
+      <section class="api-reference" id="api">
+        <div class="container">
+          <h2 class="section-title">API Reference</h2>
+          <p class="section-desc">
+            For the overachievers - here's the complete API (which you probably
+            won't need because the basic setup is so simple).
+          </p>
 
-          <div class="methods-grid">
-            <div class="method">
-              <h4>MasonIt.refresh()</h4>
-              <p>
-                When you've added new content and want everything to line up
-                again.
-              </p>
-              <div class="code-container">
-                <pre><code>// Refresh all mason-it grids
-MasonIt.refresh();
+          <div class="api-methods">
+            <div class="api-method">
+              <h3>MasonIt.init(selector, [options])</h3>
+              <p>Initializes Mason-it on the specified element(s).</p>
 
-// Refresh a specific grid
-MasonIt.refresh('#my-grid');</code></pre>
+              <h4>Parameters:</h4>
+              <dl class="params-list">
+                <dt><code>selector</code></dt>
+                <dd>
+                  String CSS selector, Element, NodeList, or Array of elements.
+                </dd>
+
+                <dt><code>options</code> (optional)</dt>
+                <dd>
+                  Configuration object with the following properties:
+                  <ul>
+                    <li>
+                      <code>masonDelay</code>: Milliseconds to wait before
+                      initial layout (default: <code>0</code>)
+                    </li>
+                    <li>
+                      <code>masonPollInterval</code>: Interval in ms to check
+                      for content changes (default: <code>0</code>, disabled)
+                    </li>
+                  </ul>
+                </dd>
+              </dl>
+              <div class="code-example">
+                <div class="code-wrapper">
+                  <pre><code>// Initialize a specific grid with options
+MasonIt.init('#my-grid', {
+  masonDelay: 200,
+  masonPollInterval: 1000
+});
+
+// Initialize multiple grids
+MasonIt.init('.masonry-grids');</code></pre>
+                </div>
               </div>
             </div>
 
-            <div class="method">
-              <h4>MasonIt.destroy()</h4>
-              <p>For when your relationship with mason-it isn't working out.</p>
-              <div class="code-container">
-                <pre><code>// Destroy all mason-it grids
-MasonIt.destroy();
+            <div class="api-method">
+              <h3>MasonIt.refresh([selector])</h3>
+              <p>
+                Manually refreshes the layout for the specified element(s) or
+                all initialized elements if no selector is provided.
+              </p>
 
-// Destroy a specific grid
-MasonIt.destroy('#my-grid');</code></pre>
+              <h4>Parameters:</h4>
+              <dl class="params-list">
+                <dt><code>selector</code> (optional)</dt>
+                <dd>
+                  String CSS selector, Element, NodeList, or Array of elements.
+                  If omitted, refreshes all active Mason-it instances.
+                </dd>
+              </dl>
+              <div class="code-example">
+                <div class="code-wrapper">
+                  <pre><code>// Refresh a specific grid
+MasonIt.refresh('#my-grid');
+
+// Refresh all masonry grids
+MasonIt.refresh();</code></pre>
+                </div>
               </div>
             </div>
 
-            <div class="method">
-              <h4>MasonIt.debug()</h4>
+            <div class="api-method">
+              <h3>MasonIt.destroy([selector])</h3>
               <p>
-                For when you absolutely must know what's happening under the
-                hood.
+                Removes Mason-it functionality (when your relationship with
+                mason-it isn't working out).
               </p>
-              <div class="code-container">
-                <pre><code>// Enable debug mode
+
+              <h4>Parameters:</h4>
+              <dl class="params-list">
+                <dt><code>selector</code> (optional)</dt>
+                <dd>
+                  String CSS selector, Element, NodeList, or Array of elements.
+                  If omitted, destroys all active Mason-it instances.
+                </dd>
+              </dl>
+              <div class="code-example">
+                <div class="code-wrapper">
+                  <pre><code>// Remove Mason-it from a specific grid
+MasonIt.destroy('#my-grid');
+
+// Remove Mason-it from all grids
+MasonIt.destroy();</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <div class="api-method">
+              <h3>MasonIt.debug(enable)</h3>
+              <p>
+                Enables or disables debug mode (for when you absolutely must
+                know what's happening under the hood).
+              </p>
+
+              <h4>Parameters:</h4>
+              <dl class="params-list">
+                <dt><code>enable</code></dt>
+                <dd>
+                  Boolean value to enable (<code>true</code>) or disable
+                  (<code>false</code>) debug mode.
+                </dd>
+              </dl>
+              <div class="code-example">
+                <div class="code-wrapper">
+                  <pre><code>// Enable debug mode
 MasonIt.debug(true);
 
 // Disable debug mode
 MasonIt.debug(false);</code></pre>
+                </div>
               </div>
             </div>
 
-            <div class="method">
-              <h4>Other Utilities</h4>
-              <p>For the curious who want to know everything.</p>
-              <div class="code-container">
-                <pre><code>// Get the version
-console.log(MasonIt.version());
+            <div class="api-method">
+              <h3>MasonIt.version()</h3>
+              <p>
+                Returns the current version (why? I don't know, but here it is
+                anyway).
+              </p>
+              <div class="code-example">
+                <div class="code-wrapper">
+                  <pre><code>const version = MasonIt.version(); // "1.0.1"</code></pre>
+                </div>
+              </div>
+            </div>
 
-// Count active grids
-console.log(MasonIt.count());</code></pre>
+            <div class="api-method">
+              <h3>MasonIt.count()</h3>
+              <p>
+                Returns the number of active Mason-it instances (if you're into
+                that sort of thing).
+              </p>
+              <div class="code-example">
+                <div class="code-wrapper">
+                  <pre><code>const count = MasonIt.count(); // Number of active grids</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <div class="api-method">
+              <h3>HTML Data Attributes</h3>
+              <p>
+                For declarative initialization, just add this ONE attribute to
+                your grid:
+              </p>
+              <div class="code-example">
+                <div class="code-wrapper">
+                  <pre><code>&lt;!-- Basic usage --&gt;
+&lt;div class="grid" data-mason-it&gt;&lt;/div&gt;
+
+&lt;!-- With options --&gt;
+&lt;div class="grid" data-mason-it="mason-delay:{500} mason-poll-interval:{2000}"&gt;&lt;/div&gt;</code></pre>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="browser-support">
-        <h2>Browser Support</h2>
-        <p>
-          Works in all modern browsers. Yes, even that weird one your uncle
-          uses.
-        </p>
-        <p>
-          And no, it doesn't work in IE because it's 2025 and if you're still
-          supporting IE, you have bigger problems than masonry layouts.
-        </p>
+      <section class="usage-tips" id="tips">
+        <div class="container">
+          <h2 class="section-title">Pro Tips</h2>
 
-        <div class="browser-icons">
-          <div class="browser">
-            <svg viewBox="0 0 24 24">
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
-              />
-              <circle cx="12" cy="12" r="5" />
-            </svg>
-            <span>Chrome</span>
-          </div>
-          <div class="browser">
-            <svg viewBox="0 0 24 24">
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
-              />
-              <circle cx="12" cy="12" r="5" />
-            </svg>
-            <span>Firefox</span>
-          </div>
-          <div class="browser">
-            <svg viewBox="0 0 24 24">
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
-              />
-              <circle cx="12" cy="12" r="5" />
-            </svg>
-            <span>Safari</span>
-          </div>
-          <div class="browser">
-            <svg viewBox="0 0 24 24">
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
-              />
-              <circle cx="12" cy="12" r="5" />
-            </svg>
-            <span>Edge</span>
-          </div>
-          <div class="browser disabled">
-            <svg viewBox="0 0 24 24">
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
-              />
-              <line
-                x1="4"
-                y1="20"
-                x2="20"
-                y2="4"
-                stroke="currentColor"
-                stroke-width="2"
-              />
-            </svg>
-            <span>IE</span>
-          </div>
-        </div>
-      </section>
+          <div class="tips-grid">
+            <div class="tip-card">
+              <h3>Dynamic Content</h3>
+              <p>
+                Mason-it uses <code>MutationObserver</code> to detect when items
+                are added or removed. For other dynamic changes that don't
+                trigger DOM mutations, call
+                <code>MasonIt.refresh()</code> manually.
+              </p>
+            </div>
 
-      <section class="performance">
-        <h2>Performance? Yeah, We Got That Too</h2>
-        <div class="performance-stats">
-          <div class="stat">
-            <div class="stat-number">5KB</div>
-            <div class="stat-label">Minified Size</div>
-            <div class="stat-desc">
-              Smaller than the average tweet thread complaining about JavaScript
-              frameworks.
+            <div class="tip-card">
+              <h3>Images</h3>
+              <p>
+                If your grid contains images that load asynchronously (which
+                they all do, let's be honest), consider using the
+                <code>masonDelay</code> option or manually refreshing after
+                images have loaded.
+              </p>
+              <pre><code>// Example: Refresh after images load
+window.addEventListener('load', function() {
+  MasonIt.refresh('.my-image-grid');
+});</code></pre>
             </div>
-          </div>
-          <div class="stat">
-            <div class="stat-number">0</div>
-            <div class="stat-label">Dependencies</div>
-            <div class="stat-desc">
-              No node_modules folder the size of Jupiter required.
+
+            <div class="tip-card">
+              <h3>Animations & Transitions</h3>
+              <p>
+                If you're animating grid items, trigger a refresh after
+                animations complete to ensure proper positioning:
+              </p>
+              <pre><code>element.addEventListener('transitionend', function() {
+  MasonIt.refresh('#animated-grid');
+});</code></pre>
             </div>
-          </div>
-          <div class="stat">
-            <div class="stat-number">~1ms</div>
-            <div class="stat-label">Layout Calculation</div>
-            <div class="stat-desc">
-              Faster than you can say "why is this so hard in vanilla CSS?"
+
+            <div class="tip-card">
+              <h3>Performance</h3>
+              <p>
+                For grids with many items (like, a ridiculous number of items),
+                consider using the
+                <code>masonDelay</code> option to defer initial layout until
+                after critical page content has rendered. Your users won't
+                notice, but your performance metrics will thank you.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="final-cta">
-        <div class="mascot-container">
-          <img
-            src="/docs/assets/mason-it-icon.png"
-            alt="mason-it mascot"
-            class="mascot"
-          />
-        </div>
-        <h2>Stop Overthinking It</h2>
-        <p>Just mason it and get on with your life.</p>
-        <div class="cta-buttons">
-          <a
-            href="https://github.com/Druhin13/mason-it"
-            class="cta-button primary"
-            >Get Started</a
-          >
-          <a
-            href="https://www.npmjs.com/package/mason-it"
-            class="cta-button secondary"
-            >npm</a
-          >
+      <section class="browser-support" id="browsers">
+        <div class="container">
+          <h2 class="section-title">Browser Support</h2>
+          <p class="section-desc">
+            Works everywhere except Internet Explorer, because it's May 11, 2025
+            and if you're still supporting IE, you have bigger problems than
+            masonry layouts. Mason-it relies on modern browser features like
+            <code>getComputedStyle</code> and
+            <code>requestAnimationFrame</code>.
+          </p>
+
+          <div class="browser-grid">
+            <div class="browser">
+              <div class="browser-icon" aria-hidden="true">
+                <img
+                  src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/75.0.1/chrome/chrome.svg"
+                  alt="Chrome logo"
+                  width="24"
+                  height="24"
+                />
+              </div>
+              <div class="browser-name">Chrome</div>
+              <div class="support supported">Supported</div>
+            </div>
+
+            <div class="browser">
+              <div class="browser-icon" aria-hidden="true">
+                <img
+                  src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/75.0.1/firefox/firefox.svg"
+                  alt="Firefox logo"
+                  width="24"
+                  height="24"
+                />
+              </div>
+              <div class="browser-name">Firefox</div>
+              <div class="support supported">Supported</div>
+            </div>
+
+            <div class="browser">
+              <div class="browser-icon" aria-hidden="true">
+                <img
+                  src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/75.0.1/safari-ios/safari-ios.svg"
+                  alt="Safari logo"
+                  width="24"
+                  height="24"
+                />
+              </div>
+              <div class="browser-name">Safari</div>
+              <div class="support supported">Supported</div>
+            </div>
+
+            <div class="browser">
+              <div class="browser-icon" aria-hidden="true">
+                <img
+                  src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/75.0.1/edge/edge.svg"
+                  alt="Edge logo"
+                  width="24"
+                  height="24"
+                />
+              </div>
+              <div class="browser-name">Edge</div>
+              <div class="support supported">Supported</div>
+            </div>
+
+            <div class="browser">
+              <div class="browser-icon" aria-hidden="true">
+                <img
+                  src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/75.0.1/archive/internet-explorer_9-11/internet-explorer_9-11.svg"
+                  alt="Internet Explorer logo"
+                  width="24"
+                  height="24"
+                />
+              </div>
+              <div class="browser-name">IE</div>
+              <div class="support not-supported">Not Supported</div>
+            </div>
+          </div>
         </div>
       </section>
     </main>
 
-    <footer>
-      <div class="footer-content">
-        <div class="footer-logo">
-          <img
-            src="/docs/assets/mason-it-icon.png"
-            alt="mason-it mascot"
-            class="footer-icon"
-          />
-          <span>mason-it</span>
+    <footer class="main-footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-brand">
+            <img
+              src="assets/mason-it-icon.png"
+              alt="Mason-it logo"
+              class="footer-logo"
+            />
+            <div class="footer-text">
+              <p class="footer-name">
+                Mason-it <span class="footer-version">v1.0.1</span>
+              </p>
+              <p class="footer-tagline">When in doubt, just mason it.</p>
+            </div>
+          </div>
+          <div class="footer-links">
+            <div class="link-group">
+              <h4>Documentation</h4>
+              <a href="#features">Features</a>
+              <a href="#installation">Installation</a>
+              <a href="#api">API Reference</a>
+              <a href="#tips">Pro Tips</a>
+            </div>
+            <div class="link-group">
+              <h4>Resources</h4>
+              <a href="#demo">Interactive Demo</a>
+              <a
+                href="https://github.com/Druhin13/mason-it"
+                target="_blank"
+                rel="noopener"
+                >GitHub</a
+              >
+              <a
+                href="https://github.com/Druhin13/mason-it/issues"
+                target="_blank"
+                rel="noopener"
+                >Report an Issue</a
+              >
+              <a
+                href="https://www.npmjs.com/package/mason-it"
+                target="_blank"
+                rel="noopener"
+                >NPM Package</a
+              >
+            </div>
+          </div>
         </div>
-        <div class="footer-links">
-          <a href="https://github.com/Druhin13/mason-it">GitHub</a>
-          <a href="https://www.npmjs.com/package/mason-it">npm</a>
-          <a href="https://github.com/Druhin13/mason-it/issues">Issues</a>
-          <a href="https://github.com/Druhin13/mason-it/blob/main/LICENSE"
-            >License</a
-          >
-        </div>
-        <div class="footer-credit">
+        <div class="footer-bottom">
+          <p>&copy; 2025 Druhin13. Released under the MIT License.</p>
           <p>
-            Made with spite and caffeine by
-            <a href="https://github.com/Druhin13">Druhin13</a>
+            <a
+              href="https://github.com/Druhin13/mason-it/blob/main/LICENSE"
+              target="_blank"
+              rel="noopener"
+              >License</a
+            >
           </p>
-          <p>MIT License © 2025</p>
         </div>
       </div>
     </footer>

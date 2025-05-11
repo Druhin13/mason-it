@@ -15,6 +15,7 @@
 - [About](#so-youve-wasted-half-your-life-trying-to-make-a-masonry-layout-work)
 - [Why mason-it](#heres-why-you-absolutely-need-this)
 - [Features](#features)
+- [Live Demo](#live-demo)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Advanced Configuration](#advanced-configuration-for-the-overachievers)
@@ -65,6 +66,20 @@ Now, do you really want to spend the next 3 hours reading documentation just to 
 - **Blazing fast & Ridiculously responsive**: So fast, it makes other libraries look like they're stuck in molasses. Recalculates layouts instantly, making it feel native and snappy.
 - **Doesn't break when images load**: Take that, other libraries! (not name-shaming anyone in particular… _uhm… uhm…_ it's in the name… _uhm hmm_)
 - **Microscopic footprint**: The entire library is just over 6KB minified and gzipped. That's smaller than this README that you're reading, and I'm not even joking.
+
+<br>
+
+<br>
+
+## Live Demo
+
+Look, I could spend another 1000 words trying to convince you, or you could just see it in action.
+
+**[Check out the interactive demo →](https://druhin13.github.io/mason-it/)**
+
+Play with the controls, add some items, resize the container, and see how `mason-it` handles everything with grace while other libraries would be having a nervous breakdown.
+
+![mason-it-cover](/docs/assets/demo.png)
 
 <br>
 
@@ -245,3 +260,5 @@ It's MIT. Take it. Use it. Don't sue me if your website collapses like a poorly 
 ## Final Thoughts
 
 If you've read this far, congratulations on having way too much time on your hands. Now go make your grids look pretty, and remember: when in doubt, _just mason it_.
+
+Still not convinced? [Try the interactive demo](https://druhin13.github.io/mason-it/) and see for yourself.
